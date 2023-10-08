@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import persons from './services/persons'
+//import persons from './services/persons'
 import personService from './services/persons'
+
+const baseUrl = 'http://localhost:3001/api/persons'
 
 
 const Name = (props) => {
@@ -69,7 +71,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/persons")
+      .get(baseUrl)
       .then(response => {
         setPersons(response.data)
       })
@@ -91,7 +93,10 @@ const App = () => {
       personService
         .create(personObject)
         .then(returnedPerson => {
+          console.log("added person")
+          console.log(returnedPerson)
           setPersons(persons.concat(returnedPerson))
+          console.log(persons)
         })
         .then(returnedPerson => {
           setNotif(`${newName} added succesfully!`)
@@ -100,7 +105,10 @@ const App = () => {
           }, 2000)
         })
         .catch(error => {
-          setError(`Something went wrong with adding ${newName}`)
+          console.log("went to error")
+          console.log(error.response.data.error)
+          //setError(`Something went wrong with adding ${newName}`)
+          setError(error.response.data.error)
           setTimeout( () => {
             setError(null)
           }, 2000)
@@ -110,16 +118,16 @@ const App = () => {
   }
 
   const deleteName = (event) => {
-    const id = persons.find(name => event.target.id === name.name)
     event.preventDefault()
-    console.log("delete clicked")
+    const id = persons.find(name => event.target.id === name.name).id
     if(window.confirm(`Delete ${event.target.id} ?`)) {
       personService
-        .deletePerson(id.id)
+        .deletePerson(id)
         .then(returned => {
           setPersons(persons.filter(person => person.name !== event.target.id))
         })
         .then(returned => {
+          console.log(returned)
           setNotif(`${event.target.id} deleted succesfully!`)
           setTimeout(() => {
             setNotif(null)
@@ -144,6 +152,7 @@ const App = () => {
       personService
         .update(id, numberChange)
         .then(returnedPerson => {
+          console.log("returned:", returnedPerson)
           setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
         })
         .then(returnedPerson => {
