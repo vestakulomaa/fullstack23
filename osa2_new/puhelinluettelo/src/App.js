@@ -3,7 +3,7 @@ import axios from 'axios'
 //import persons from './services/persons'
 import personService from './services/persons'
 
-const baseUrl = 'http://localhost:3001/api/persons'
+const baseUrl = '/api/persons'
 
 
 const Name = (props) => {
