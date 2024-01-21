@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlY29uZCIsImlkIjoiNjU5MDZkMmM0Yzk3Y2IyNjI4OGVhNGNiIiwiaWF0IjoxNzAzOTYzOTg1fQ.Ydc7iD1PtksFJZEvo4OFOihqpWhyE6amp2BFJnGL6yk
+
+{
+    "title": "Test Blog 2",
+    "author": "T. est",
+    "url": "www.test.c",
+    "likes": 30
+}
